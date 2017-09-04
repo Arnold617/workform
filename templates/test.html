@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>table模块</title>
+  <link rel="stylesheet" href="/static/css/layui.css" media="all">
+</head>
+<body>
+
+<table class="layui-table" lay-data="{height:600, url:'/api', page:true, id:'test'}" lay-filter="test">
+    <thead>
+    <tr>
+        <th lay-data="{field:'id', width:50, sort: true}">ID</th>
+        <th lay-data="{field:'project_name', width:150, sort: true}">项目名</th>
+        <th lay-data="{field:'domain', width:150, sort: true}">域名</th>
+        <th lay-data="{field:'online_date', width:150, sort: true}">日期</th>
+        <th lay-data="{field:'state', width:200, sort: true}">描述</th>
+        <th lay-data="{field:'product', width:150, sort: true}">产品</th>
+    </tr>
+    </thead>
+</table>
+
+<script src="/static/layui.js"></script>
+<script>
+    layui.use('table', function() {
+        var table = layui.table;
+    });
+</script>
+</body>
+</html>

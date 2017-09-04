@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>工单系统</title>
+    <link rel="stylesheet" href="/static/css/layui.css">
+</head>
+<body>
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header">
+            <div class="layui-logo">工单系统</div>
+            <!-- 头部区域（可配合layui已有的水平导航） -->
+            <ul class="layui-nav layui-layout-left">
+                <li class="layui-nav-item"><a href="/index/">首页</a></li>
+                <li class="layui-nav-item"><a href="/new_project/">新业务申请</a></li>
+                <li class="layui-nav-item"><a href="/set_domain/">域名解析</a></li>
+                <li class="layui-nav-item"><a href="#">数据库操作</a></li>
+                <li class="layui-nav-item"><a href="#">业务下线</a></li>
+            </ul>
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item">
+                    <a href="javascript:;">
+                        <img src="/static/images/content.jpg" class="layui-nav-img">
+                        {{ request.session.username }}
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="">基本资料</a></dd>
+                        <dd><a href="/logout/">注销</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+                <ul class="layui-nav layui-nav-tree" >
+                    <li class="layui-nav-item"><a href=""> 需求 申请</a></li>
+                    <li class="layui-nav-item"><a href=""> 待办 流程</a></li>
+                    <li class="layui-nav-item"><a href="/mine.html"> 我的 流程</a></li>
+              </ul>
+            </div>
+        </div>
+
+        <div class="layui-body">
+        <!-- 内容主体区域 -->
+            {% block content %}{% endblock %}
+        </div>
+
+        <div class="layui-footer">
+            <!-- 底部固定区域 -->
+            © www.yoozoo.com
+        </div>
+    </div>
+    <script src="/static/layui.js" charset="utf-8"></script>
+    <script>
+        layui.use(['laypage','element','form', 'laydate','table'], function() {
+            var laypage = layui.laypage;
+            var form = layui.form
+                , layer = layui.layer
+                , laydate = layui.laydate;
+            var element = layui.element;
+            var table = layui.table;
+
+            {% block js %}{% endblock %}
+
+            //日期
+            laydate.render({
+                elem: '#date'
+            });
+            form.verify({
+                domain: function (value) {
+                    if (value.length < 5) {
+                        return '标题至少得5个字符啊';
+                    }
+                }
+            })
+        });
+    </script>
+
+</body>
+</html>

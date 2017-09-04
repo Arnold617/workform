@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+  <legend>域名解析</legend>
+</fieldset>
+<form class="layui-form" action="/set_domain/" method="POST">
+{% csrf_token %}
+    <div class="layui-inline" style="padding: 12px 0;">
+        <label class="layui-form-label">产品<span style="color: red;"> *</span></label>
+        <div class="layui-input-inline">
+            <select name="product" lay-verify="required">
+                <option value="">请选择产品</option>
+                <option value="1">国内平台</option>
+                <option value="2">北美平台</option>
+                <option value="3">国内广告平台</option>
+                <option value="4">北美广告平台</option>
+        </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">域名<span style="color: red;"> *</span></label>
+        <div class="layui-input-block">
+            <input type="text" name="domain" lay-verify="domail" autocomplete="off" placeholder="请输入域名" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">IP<span style="color: red;"> *</span></label>
+        <div class="layui-input-block">
+            <input type="text" name="IP" lay-verify="domail" autocomplete="off" placeholder="多个IP使用空格隔开" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">上线日期<span style="color: red;"> *</span></label>
+            <div class="layui-input-inline">
+                <input type="text" name="date" id="date" lay-verify="date" placeholder="年-月-日" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">是否对外<span style="color: red;"> *</span></label>
+        <div class="layui-input-block">
+            <input type="checkbox" name="internal" lay-skin="switch" lay-text="是|否">
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">备注说明<span style="color: red;"> *</span></label>
+        <div class="layui-input-block">
+            <textarea name="state" placeholder="机器配置信息及其它说明可以在这里描述" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-inline" style="padding: 12px 0;">
+        <label class="layui-form-label">操作人<span style="color: red;"> *</span></label>
+        <div class="layui-input-inline">
+            <select name="ops" lay-verify="required">
+                <option value="">选择操作的人员</option>
+                <option value="1">feixiang</option>
+                <option value="2">pengpeng</option>
+                <option value="3">master_ops</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block" style="left: 30%;">
+            <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+
+</form>
+{% endblock %}
