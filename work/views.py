@@ -106,6 +106,7 @@ def test(request):
         return render(request, 'test.html', {'obj': obj})
 
 
+@auth
 def backlog(request):
     username = request.session.get('username')
     if request.method == 'GET':
