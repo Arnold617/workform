@@ -23,7 +23,9 @@ def api(request):
                                                                                      'state',
                                                                                      'product__name',
                                                                                      'project_name',
-                                                                                     'apply_date')
+                                                                                     'status',
+                                                                                     'apply_date',
+                                                                                     'ops__username')
 
         try:
             j = 0
@@ -36,7 +38,9 @@ def api(request):
                      'state': i[4],
                      'product': i[5],
                      'project_name': i[6],
-                     'apply_date': i[7]}
+                     'status': i[7],
+                     'apply_date': i[8],
+                     'ops': i[9]}
                 data_all.append(b)
             data = tuple(data_all[i:i + limit] for i in range(0, len(data_all), limit))
             res = {"code": 0, "msg": "", "count": len(data_all), "data": data[page - 1]}

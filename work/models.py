@@ -22,7 +22,7 @@ class Domain_info(models.Model):
     """新业务上线表"""
     project_name = models.CharField(max_length=64, null=True)
     domain = models.CharField(max_length=64)
-    online_date = models.DateField(max_length=64, db_index=True)
+    online_date = models.CharField(max_length=64, db_index=True)
     https = models.CharField(max_length=32, null=True)  # 0是http, 1是https
     state = models.CharField(max_length=128)
     author = models.CharField(max_length=32)
@@ -39,7 +39,7 @@ class Op_domain(models.Model):
     domain = models.CharField(max_length=64, db_index=True)
     IP = models.CharField(max_length=64)
     internal = models.CharField(max_length=32)
-    online_date = models.DateField(max_length=64, db_index=True)
+    online_date = models.CharField(max_length=64, db_index=True)
     state = models.CharField(max_length=128)
     author = models.CharField(max_length=32)
     status = models.CharField(max_length=4)  # 0 是进行中，1是已完成

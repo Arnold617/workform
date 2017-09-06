@@ -33,4 +33,6 @@ urlpatterns = [
     url(r'^mine.html$', views.mine),
     url(r'^api$', api.api),
     url(r'^test.html$', views.test),
+    url(r'^backlog.html$', views.backlog),
+    url(r'^upload/$', views.upload),
 ]

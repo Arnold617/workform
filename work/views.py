@@ -1,11 +1,11 @@
 # Create your views here.
+from django.views.decorators.csrf import csrf_protect,csrf_exempt
 from django.shortcuts import render,redirect,HttpResponse
 from work import models
-
 import time
-
-
 from work.view.account import auth
+
+
 # 主页
 @auth
 def index(request):
@@ -24,7 +24,7 @@ def index(request):
 @auth
 def new_project(request):
     if request.method == 'GET':
-        obj = models.Domain_info.objects.filter(id=1).first()
+        # obj = models.Domain_info.objects.filter(id=1).first()
         return render(request, 'new_project.html')
     elif request.method == 'POST':
         project_name = request.POST.get('project_name')
@@ -65,7 +65,7 @@ def set_domain(request):
     elif request.method =='POST':
         domain = request.POST.get('domain')
         IP = request.POST.get('IP')
-        date = request.POST.get('date')
+        online_date = str(request.POST.get('date'))
         apply_date = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         internal = request.POST.get('internal')
         if  not internal:
@@ -81,7 +81,7 @@ def set_domain(request):
         if domain and product and state:
             models.Op_domain.objects.create(domain=domain,
                                             IP=IP,
-                                            online_date=date,
+                                            online_date=online_date,
                                             apply_date=apply_date,
                                             internal=internal,
                                             product_id=product,
@@ -95,8 +95,43 @@ def set_domain(request):
 
 
 def test(request):
-    return render(request, 'test.html')
+    if request.method == 'GET':
+        obj = models.User_Info.objects.filter(username='feixiang').all()
+        # for i in obj:
+        #     # print(i.domain_info_set.all())
+        #     for j1 in i.domain_info_set.all():
+        #         print(j1.domain,j1.online_date, j1.product.name, j1.ops.username)
+        #     for j2 in i.op_domain_set.all():
+        #         print(j2.domain, j2.online_date, j2.product.name,j2.status)
+        return render(request, 'test.html', {'obj': obj})
+
+
+def backlog(request):
+    username = request.session.get('username')
+    if request.method == 'GET':
+        obj = models.User_Info.objects.filter(username=username).all()
+        return render(request, 'backlog.html', {'obj': obj})
+
 
 @auth
 def mine(request):
     return render(request, 'mine.html')
+
+
+@csrf_exempt
+def upload(request):
+    if request.method == 'GET':
+        return render(request, 'upload.html')
+    elif request.method =='POST':
+        username = request.POST.get('username')
+        fafafa = request.FILES.get('fafafa')
+        import os
+        img_path = os.path.join('static/images',fafafa.name)
+        print(img_path)
+        with open(img_path,'wb') as f:
+            for item in fafafa.chunks():
+                f.write(item)
+
+        ret = {'code': True , 'data': img_path}
+        import json
+        return HttpResponse(json.dumps(ret))
