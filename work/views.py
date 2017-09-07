@@ -105,13 +105,36 @@ def test(request):
         #         print(j2.domain, j2.online_date, j2.product.name,j2.status)
         return render(request, 'test.html', {'obj': obj})
 
-
+from utils import pagination
 @auth
 def backlog(request):
+    # username = request.session.get('username')
+    # if request.method == 'GET':
+    #     obj = models.User_Info.objects.filter(username=username).all()
+    #     return render(request, 'backlog.html', {'obj': obj})
     username = request.session.get('username')
-    if request.method == 'GET':
-        obj = models.User_Info.objects.filter(username=username).all()
-        return render(request, 'backlog.html', {'obj': obj})
+    obj = models.User_Info.objects.filter(username=username).all()
+    LIST = []
+    for project in obj:
+        for item in project.domain_info_set.all():
+            if item.status == '0':
+                LIST.append(item)
+        for item2 in project.op_domain_set.all():
+            if item2.status == '0':
+                LIST.append(item2)
+    current_page = request.GET.get('p', 1)
+    current_page = int(current_page)
+    # val = request.GET.get('per_page_count', 10)
+    val = int(20)
+    page_obj = pagination.Page(current_page, len(LIST), val)
+    data = LIST[page_obj.start:page_obj.end]
+
+    page_str = page_obj.page_str('/backlog.html')
+    return render(request, 'backlog.html', {'data': data, 'page_str': page_str})
+
+
+
+
 
 
 @auth

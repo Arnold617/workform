@@ -42,9 +42,11 @@ class Page:
                     start_index = self.total_count - self.pager_num + 1
 
         if self.current_page == 1:
-            prev = '<a class="page" href="javascript:void(0);">上一页</a>'
+            # prev = '<a class="page" href="javascript:void(0);">上一页</a>'
+            prev = '<a class="page" href="javascript:void(0);"> < </a>'
         else:
-            prev = '<a class="page" href="%s?p=%s">上一页</a>' % (base_url, self.current_page - 1,)
+            # prev = '<a class="page" href="%s?p=%s">上一页</a>' % (base_url, self.current_page - 1,)
+            prev = '<a class="page" href="%s?p=%s"> < </a>' % (base_url, self.current_page - 1,)
         page_list.append(prev)
 
         for i in range(int(start_index), int(end_index)):
@@ -55,9 +57,11 @@ class Page:
             page_list.append(temp)
 
         if self.current_page == self.total_count:
-            nex = '<a class="page" href="javascript:void(0);">下一页</a>'
+            # nex = '<a class="page" href="javascript:void(0);">下一页</a>'
+            nex = '<a class="page" href="javascript:void(0);"> > </a>'
         else:
-            nex = '<a class="page" href="%s?p=%s">下一页</a>' % (base_url, self.current_page + 1,)
+            # nex = '<a class="page" href="%s?p=%s">下一页</a>' % (base_url, self.current_page + 1,)
+            nex = '<a class="page" href="%s?p=%s"> > </a>' % (base_url, self.current_page + 1,)
         page_list.append(nex)
 
         jump = """

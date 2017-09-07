@@ -3,57 +3,77 @@
 <head>
   <meta charset="utf-8">
   <title>table模块</title>
-  <link rel="stylesheet" href="/static/css/layui.css" media="all">
+{#  <link rel="stylesheet" href="/static/css/layui.css" media="all">#}
+  <link rel="stylesheet" href="/static/css/layui.css">
+  <style>
+      .backlog-border{
+          padding: 5px 30px;
+          font-size: 15px;
+      }
+      .pagination .page{
+          display: inline-block;
+          width: 25px;
+          padding: 5px;
+          border: 1px solid #dddddd;
+          text-align: center;
+        }
+      .pagination .page.active{
+          background-color: #009688;
+          color: white;
+        }
+</style>
 </head>
+
+<div class="layui-btn">heghe</div>
+
+
 <body>
     <table border="0">
         <thead>
         <tr>
-            <th>序号</th>
-            <th>域名</th>
-            <th>上线日期</th>
-            <th>申请日期</th>
-            <th>产品</th>
-            <th>状态</th>
+            <th class="backlog-border">序号</th>
+            <th class="backlog-border">域名</th>
+            <th class="backlog-border">上线日期</th>
+            <th class="backlog-border">申请日期</th>
+            <th class="backlog-border">产品</th>
+            <th class="backlog-border">状态</th>
         </tr>
         </thead>
         <tbody>
-
-    {% for item in obj %}
-        {% for value1 in item.domain_info_set.all %}
+        {% for item in data %}
         <tr>
-            <td>{{ forloop.counter }}</td>
-            <td>{{ value1.domain }}</td>
-            <td style="padding: 10px;">{{ value1.online_date }}</td>
-            <td>{{ value1.apply_date }}</td>
-            <td>{{ value1.product.name }}</td>
-            <td>{{ value1.status }}</td>
-        </tr>
-        {% endfor %}
-        {% for value2 in item.op_domain_set.all %}
-        <tr>
-            <td>{{ forloop.counter }}</td>
-            <td>{{ value2.domain }}</td>
-            <td>{{ value2.online_date }}</td>
-            <td>{{ value2.apply_date }}</td>
-            <td>{{ value2.product.name }}</td>
-            {% if value2.status in '0' %}
-            <td><span class="layui-badge">处理中</span></td>
+            <td class="backlog-border"><a href="#">{{ item.id }}</a></td>
+            <td class="backlog-border">{{ item.domain }}</td>
+            <td class="backlog-border">{{ item.online_date }}</td>
+            <td class="backlog-border">{{ item.apply_date }}</td>
+            <td class="backlog-border">{{ item.product.name }}</td>
+            {% if item.status in '0' %}
+            <td class="backlog-border"><span class="layui-badge">处理中</span></td>
             {% else %}
-            <td><span class="layui-badge layui-bg-green">已完成</span></td>
+            <td class="backlog-border"><span class="layui-badge layui-bg-green">已完成</span></td>
             {% endif %}
         </tr>
         {% endfor %}
-    {% endfor %}
         </tbody>
     </table>
+    <div>
+        <div style="display: inline-block">
+            <select id="ps" style="height: 28px; border: 1px solid #dddddd" onchange="changePageSize()">
+                <option value="10">10 条/页</option>
+                <option value="30">30 条/页</option>
+                <option value="50">50 条/页</option>
+                <option value="100">100 条/页</option>
+            </select>
+        </div>
+        <div class="pagination" style="display:inline-block;">
+            {{ page_str }}
+        </div>
+    </div>
 
+    <script src="/static/layui.js"></script>
+    <script src="/static/js/jquery.min.js"></script>
+    <script>
 
-<script src="/static/layui.js"></script>
-<script>
-    layui.use('table', function() {
-        var table = layui.table;
-    });
-</script>
+    </script>
 </body>
 </html>

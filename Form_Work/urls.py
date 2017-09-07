@@ -32,7 +32,8 @@ urlpatterns = [
     url(r'^set_domain/$', views.set_domain),
     url(r'^mine.html$', views.mine),
     url(r'^api$', api.api),
-    url(r'^test.html$', views.test),
+    # url(r'^test.html$', views.test),
+    url(r'^test.html$', paging.test),
     url(r'^backlog.html$', views.backlog),
     url(r'^upload/$', views.upload),
 ]
