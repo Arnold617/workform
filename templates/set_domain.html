@@ -1,9 +1,8 @@
 {% extends 'base.html' %}
 
+{% block title %}域名解析{% endblock %}
+
 {% block content %}
-<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
-  <legend>域名解析</legend>
-</fieldset>
 <form class="layui-form" action="/set_domain/" method="POST">
 {% csrf_token %}
     <div class="layui-inline" style="padding: 12px 0;">

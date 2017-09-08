@@ -1,13 +1,12 @@
 {% extends 'base.html' %}
 
+{% block title %}新业务申请{% endblock %}
+
 {% block content %}
-<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
-  <legend>新业务申请</legend>
-</fieldset>
 <form class="layui-form" action="/new_project/" method="POST">
     {% csrf_token %}
     <div class="layui-inline" style="padding: 12px 0;">
-        <label class="layui-form-label">产品<span style="color: red;"> *</span></label>
+        <label class="layui-form-label">产品<span class="red"> *</span></label>
         <div class="layui-input-inline">
             <select name="product" lay-verify="required">
                 <option value="">请选择产品</option>
@@ -20,22 +19,22 @@
     </div>
 
     <div class="layui-form-item">
-        <label class="layui-form-label">项目名称<span style="color: red;"> *</span></label>
+        <label class="layui-form-label">项目名称<span class="red"> *</span></label>
         <div class="layui-input-block">
             <input type="text" name="project_name" lay-verify="domail" autocomplete="off" placeholder="请输入域名" class="layui-input">
         </div>
     </div>
 
     <div class="layui-form-item">
-        <label class="layui-form-label">项目域名<span style="color: red;"> *</span></label>
+        <label class="layui-form-label">项目域名<span class="red"> *</span></label>
         <div class="layui-input-block">
-            <input type="text" id="domain" name="domain" lay-verify="domail" autocomplete="off" placeholder="请输入域名" class="layui-input">
+            <input type="text" id="domain" name="domain" lay-verify="domail" autocomplete="off" placeholder="请输入项目名" class="layui-input">
         </div>
     </div>
 
     <div class="layui-form-item">
         <div class="layui-inline">
-            <label class="layui-form-label">上线日期<span style="color: red;"> *</span></label>
+            <label class="layui-form-label">上线日期<span class="red"> *</span></label>
             <div class="layui-input-inline">
                 <input type="text" name="date" id="date" lay-verify="date" placeholder="年-月-日" autocomplete="off" class="layui-input">
             </div>
@@ -43,20 +42,20 @@
     </div>
 
     <div class="layui-form-item">
-        <label class="layui-form-label">https<span style="color: red;"> *</span></label>
+        <label class="layui-form-label">https<span class="red"> *</span></label>
         <div class="layui-input-block">
             <input type="checkbox" name="https" lay-skin="switch" lay-text="是|否">
         </div>
     </div>
 
     <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">备注说明<span style="color: red;"> *</span></label>
+        <label class="layui-form-label">备注说明<span class="red"> *</span></label>
         <div class="layui-input-block">
             <textarea name="state" placeholder="机器配置信息及其它说明可以在这里描述" class="layui-textarea"></textarea>
         </div>
     </div>
     <div class="layui-inline" style="padding: 12px 0;">
-        <label class="layui-form-label">操作人<span style="color: red;"> *</span></label>
+        <label class="layui-form-label">操作人<span class="red"> *</span></label>
         <div class="layui-input-inline">
             <select name="ops" lay-verify="required">
                 <option value="">选择操作的人员</option>

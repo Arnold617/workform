@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}详情{% endblock %}
+
+{% block content %}
+  <form class="layui-form" action="/backlog-detail-{{ obj.id }}.html" method="POST">
+      {% csrf_token %}
+      <div class="layui-inline" style="padding: 12px 0;">
+          <label class="layui-form-label">产品：</label>
+          <div class="layui-input-inline">
+              <select name="product">
+              <option value="1">{{ obj.product.name }}</option>
+              </select>
+          </div>
+      </div>
+      <div class="layui-form-item">
+          <label class="layui-form-label">项目名称：</label>
+          <div class="layui-input-block">
+              <input type="text" name="project_name" readonly="readonly" value="{{ obj.project_name }}" class="layui-input">
+          </div>
+      </div>
+      <div class="layui-form-item">
+          <label class="layui-form-label">项目域名：</label>
+          <div class="layui-input-block">
+              <input type="text" name="domain"  value="{{ obj.domain }}" class="layui-input">
+          </div>
+      </div>
+      <div class="layui-form-item">
+          <div class="layui-inline">
+              <label class="layui-form-label">上线日期：</label>
+              <div class="layui-input-inline detail-pading">
+                  {{ obj.online_date }}
+              </div>
+          </div>
+      </div>
+      <div class="layui-form-item">
+          <label class="layui-form-label">https：</label>
+          <div class="layui-input-block detail-pading">
+              {{ obj.https }}
+          </div>
+      </div>
+      <div class="layui-form-item layui-form-text">
+          <label class="layui-form-label">备注说明：</label>
+          <div class="layui-input-block">
+              <textarea name="state" class="layui-textarea">{{ obj.state }}</textarea>
+              <div style="color: brown;">*机器和备注的信息可以填在这里*</div>
+          </div>
+      </div>
+      <div class="layui-inline" style="padding: 12px 0;">
+          <label class="layui-form-label">操作人：</label>
+          <div class="layui-input-inline">
+              <select name="ops" lay-verify="required">
+{#                  <option>{{ obj.ops.username }}</option>#}
+                  <option value="1">feixiang</option>
+                  <option value="2">pengpeng</option>
+                  <option value="3">master_ops</option>
+              </select>
+          </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">是否完成：<span class="red"> *</span></label>
+        <div class="layui-input-block">
+            <input type="checkbox" name="status" lay-skin="switch" lay-text="是|否">
+        </div>
+    </div>
+      <div class="layui-form-item">
+          <div class="layui-input-block" style="left: 30%; padding: 50px;">
+              <button class="layui-btn" lay-submit="" lay-filter="demo1">确认提交</button>
+              <button type="reset" class="layui-btn layui-btn-primary">取消</button>
+          </div>
+      </div>
+  </form>
+{% endblock %}

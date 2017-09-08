@@ -4,6 +4,7 @@ from django.shortcuts import render,redirect,HttpResponse
 from work import models
 import time
 from work.view.account import auth
+from utils import pagination
 
 
 # 主页
@@ -97,44 +98,51 @@ def set_domain(request):
 def test(request):
     if request.method == 'GET':
         obj = models.User_Info.objects.filter(username='feixiang').all()
-        # for i in obj:
-        #     # print(i.domain_info_set.all())
-        #     for j1 in i.domain_info_set.all():
-        #         print(j1.domain,j1.online_date, j1.product.name, j1.ops.username)
-        #     for j2 in i.op_domain_set.all():
-        #         print(j2.domain, j2.online_date, j2.product.name,j2.status)
         return render(request, 'test.html', {'obj': obj})
 
-from utils import pagination
+
 @auth
 def backlog(request):
-    # username = request.session.get('username')
-    # if request.method == 'GET':
-    #     obj = models.User_Info.objects.filter(username=username).all()
-    #     return render(request, 'backlog.html', {'obj': obj})
-    username = request.session.get('username')
-    obj = models.User_Info.objects.filter(username=username).all()
-    LIST = []
-    for project in obj:
-        for item in project.domain_info_set.all():
-            if item.status == '0':
-                LIST.append(item)
-        for item2 in project.op_domain_set.all():
-            if item2.status == '0':
-                LIST.append(item2)
-    current_page = request.GET.get('p', 1)
-    current_page = int(current_page)
-    # val = request.GET.get('per_page_count', 10)
-    val = int(20)
-    page_obj = pagination.Page(current_page, len(LIST), val)
-    data = LIST[page_obj.start:page_obj.end]
+    if request.method == 'GET':
+        username = request.session.get('username')
+        obj = models.User_Info.objects.filter(username=username).all()
+        LIST = []
+        for project in obj:
+            for item in project.domain_info_set.all():
+                if item.status == '0':
+                    LIST.append(item)
+            # for item2 in project.op_domain_set.all():
+            #     if item2.status == '0':
+            #         LIST.append(item2)
+        current_page = request.GET.get('p', 1)
+        current_page = int(current_page)
+        # val = request.GET.get('per_page_count', 10)
+        val = int(20)
+        page_obj = pagination.Page(current_page, len(LIST), val)
+        data = LIST[page_obj.start:page_obj.end]
 
-    page_str = page_obj.page_str('/backlog.html')
-    return render(request, 'backlog.html', {'data': data, 'page_str': page_str})
+        page_str = page_obj.page_str('/backlog.html')
+        return render(request, 'backlog.html', {'data': data, 'page_str': page_str})
 
 
-
-
+# @auth
+def backlog_detail(request, nid):
+    if request.method == 'GET':
+        obj = models.Domain_info.objects.filter(id=nid).first()
+        return render(request, 'backlog-detail.html', {'obj': obj})
+    elif request.method == 'POST':
+        # nid = request.POST.get('nid')
+        state = request.POST.get('state')
+        ops = request.POST.get('ops')
+        status = request.POST.get('status')
+        print(ops, nid, status)
+        if status:
+            status = 1
+        else:
+            status = 0
+        if nid:
+            models.Domain_info.objects.filter(id=nid).update(ops_id=ops, state=state, status=status)
+            return redirect('/mine.html')
 
 
 @auth

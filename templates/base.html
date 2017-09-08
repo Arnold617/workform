@@ -65,6 +65,10 @@
 
         <div class="layui-body">
         <!-- 内容主体区域 -->
+
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+            <legend>{% block title %}{% endblock %}</legend>
+        </fieldset>
             {% block content %}{% endblock %}
         </div>
 

@@ -35,5 +35,6 @@ urlpatterns = [
     # url(r'^test.html$', views.test),
     url(r'^test.html$', paging.test),
     url(r'^backlog.html$', views.backlog),
+    url(r'^backlog-detail-(\d+).html$', views.backlog_detail),
     url(r'^upload/$', views.upload),
 ]

@@ -21,7 +21,7 @@ class Product(models.Model):
 class Domain_info(models.Model):
     """新业务上线表"""
     project_name = models.CharField(max_length=64, null=True)
-    domain = models.CharField(max_length=64)
+    domain = models.CharField(max_length=64, db_index=True)
     online_date = models.CharField(max_length=64, db_index=True)
     https = models.CharField(max_length=32, null=True)  # 0是http, 1是https
     state = models.CharField(max_length=128)

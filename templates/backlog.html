@@ -9,7 +9,7 @@
         <table border="2">
             <thead>
             <tr>
-                <th class="backlog-border">序号</th>
+                <th class="backlog-border">ID</th>
                 <th class="backlog-border">域名</th>
                 <th class="backlog-border">上线日期</th>
                 <th class="backlog-border">申请日期</th>
@@ -20,7 +20,7 @@
             <tbody>
             {% for item in data %}
             <tr>
-                <td class="backlog-border"><a href="#">{{ forloop.counter }}</a></td>
+                <td class="backlog-border"><a href="/backlog-detail-{{ item.id }}.html" target="view_window">{{ item.id }}</a></td>
                 <td class="backlog-border">{{ item.domain }}</td>
                 <td class="backlog-border">{{ item.online_date }}</td>
                 <td class="backlog-border">{{ item.apply_date }}</td>
