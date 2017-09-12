@@ -1,0 +1,60 @@
+{#{% load filter %}#}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .condition a{
+            display: inline-block;
+            padding: 3px 5px;
+            border: 1px solid #dddddd;
+            margin: 5px ;
+            text-decoration: none;
+        }
+        .condition a.active{
+            background-color: brown;
+        }
+    </style>
+</head>
+<body>
+    <h1>过滤条件</h1>
+    <div class="condition">
+        <div>
+{#            {% filter_all arg_dict 'article_type_id' %}#}
+            {% if arg_dict.category_id == 0 %}
+                <a class="active" href="/article-{{ arg_dict.article_type_id }}-0.html">全部</a>
+            {% else %}
+                <a href="/article-{{ arg_dict.article_type_id }}-0.html">全部</a>
+            {% endif %}
+            {% for row in category_list %}
+                {% if row.id == arg_dict.category_id %}
+                    <a class="active" href="/article-{{ arg_dict.article_type_id }}-{{ row.id  }}.html">{{ row.caption }}</a>
+                {% else %}
+                    <a href="/article-{{ arg_dict.article_type_id }}-{{ row.id  }}.html">{{ row.caption }}</a>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div>
+            {% if arg_dict.article_type_id == 0 %}
+                <a class="active" href="/article-0-{{ arg_dict.category_id }}.html">全部</a>
+            {% else %}
+                <a href="/article-0-{{ arg_dict.category_id }}.html">全部</a>
+            {% endif %}
+            {% for row in article_type_list %}
+                {% if row.id == arg_dict.article_type_id %}
+                    <a class="active" href="/article-{{ row.id  }}-{{ arg_dict.category_id }}.html">{{ row.caption }}</a>
+                {% else %}
+                    <a href="/article-{{ row.id  }}-{{ arg_dict.category_id }}.html">{{ row.caption }}</a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <h1>查询结果</h1>
+    <ul>
+        {% for row in result %}
+            <li>{{ row.id }}-{{ row.title }}-{{ row.content }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

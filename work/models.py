@@ -49,3 +49,17 @@ class Op_domain(models.Model):
 
     class Meta:
         db_table = 'op_domain'
+
+
+# 组合搜索功能的表
+class Category(models.Model):
+    caption = models.CharField(max_length=16, unique=True)
+
+class ArticleType(models.Model):
+    caption = models.CharField(max_length=16, unique=True)
+
+class Article(models.Model):
+    title = models.CharField(max_length=32)
+    content = models.CharField(max_length=255)
+    category = models.ForeignKey('Category', to_field='id')
+    article_type = models.ForeignKey('ArticleType', to_field='id')

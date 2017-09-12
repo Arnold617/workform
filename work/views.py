@@ -155,7 +155,7 @@ def upload(request):
     if request.method == 'GET':
         return render(request, 'upload.html')
     elif request.method =='POST':
-        username = request.POST.get('username')
+        # username = request.POST.get('username')
         fafafa = request.FILES.get('fafafa')
         import os
         img_path = os.path.join('static/images',fafafa.name)
@@ -167,3 +167,22 @@ def upload(request):
         ret = {'code': True , 'data': img_path}
         import json
         return HttpResponse(json.dumps(ret))
+
+
+# 组合搜索
+def article(request, *args, **kwargs):
+    condition = {}
+    for k,v in kwargs.items():
+        kwargs[k] = int(v)
+        if v == '0':
+            pass
+        else:
+            condition[k] = v
+    article_type_list = models.ArticleType.objects.all()
+    category_list = models.Category.objects.all()
+    result = models.Article.objects.filter(**condition)
+    print(kwargs)
+    return render(request,'article.html',{'article_type_list': article_type_list,
+                                          'category_list': category_list,
+                                          'result': result,
+                                          'arg_dict': kwargs})
