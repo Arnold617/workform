@@ -1,7 +1,18 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect, HttpResponse
 from work import models
 from django.views.decorators.csrf import csrf_protect,csrf_exempt
 from work.forms import FM_REGISTER
+from io import BytesIO
+from utils.check_code import create_validate_code
+
+
+def check_code(request):
+    stream = BytesIO()
+    img, code = create_validate_code()
+    img.save(stream, 'PNG')
+    request.session['CheckCode'] = code
+    return HttpResponse(stream.getvalue())
+
 
 # @csrf_exempt
 def login(request):
@@ -10,25 +21,28 @@ def login(request):
     if request.method == "POST":
         username = request.POST.get('username', None)
         password = request.POST.get('password', None)
-        if not username:
-            return render(request, 'login.html', {'error_msg': "User or password is empty"})
-        else:
-            try:
-                obj = models.User_Info.objects.filter(username=username).first()
-                if  obj.username == username and obj.password == password:
-                    request.session['username'] = username
-                    request.session['is_login'] = True
-                    # print(request.POST.get('remember', None))
-                    if request.POST.get('remember', None) == '1':
-                        # 超时时间(秒)
-                        request.session.set_expiry(60 * 60)
+        auth_code =  request.POST.get('check_code')
+        if auth_code.upper() == request.session['CheckCode'].upper():
+            if not username:
+                return render(request, 'login.html', {'error_msg': "User or password is empty"})
+            else:
+                try:
+                    obj = models.User_Info.objects.filter(username=username).first()
+                    if  obj.username == username and obj.password == password:
+                        request.session['username'] = username
+                        request.session['is_login'] = True
+                        if request.POST.get('remember', None) == '1':
+                            # 超时时间(秒)
+                            request.session.set_expiry(60 * 60)
+                        else:
+                            request.session.set_expiry(20)
+                        return redirect('/index/')
                     else:
-                        request.session.set_expiry(20)
-                    return redirect('/index/')
-                else:
+                        return render(request, 'login.html', {'error_msg': "User or password error"})
+                except AttributeError as e:
                     return render(request, 'login.html', {'error_msg': "User or password error"})
-            except AttributeError as e:
-                return render(request, 'login.html', {'error_msg': "User or password error"})
+        else:
+            return render(request, 'login.html', {'error_msg': 'auth_code error'} )
 
 def auth(func):
     def inner(request, *args, **kwargs):

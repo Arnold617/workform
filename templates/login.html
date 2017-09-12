@@ -17,9 +17,9 @@
     </div>
     <!--验证码-->
     <div class=" form-group">
-
+        <input type="text" class="form-control" placeholder="请输入验证码" name="check_code">
+        <img src="/check_code.html" onclick="changeCheckCode(this);">
     </div>
-
     <div class="form-group">
         <label for="remember"><input type="checkbox" id="remember" name="remember" value="1"> Remember Me</label>
     </div>
@@ -32,4 +32,9 @@
     </div>
 </form>
 <!-- END Sign In Form -->
+<script>
+    function changeCheckCode(ths) {
+        ths.src = ths.src + '?';
+    }
+</script>
 {% endblock %}

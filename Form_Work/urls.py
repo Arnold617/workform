@@ -37,5 +37,6 @@ urlpatterns = [
     url(r'^backlog.html$', views.backlog),
     url(r'^backlog-detail-(\d+).html$', views.backlog_detail),
     url(r'^upload/$', views.upload),
+    url(r'^check_code.html$', account.check_code),
     url(r'^article-(?P<article_type_id>\d+)-(?P<category_id>\d+).html', views.article, name='article')
 ]
