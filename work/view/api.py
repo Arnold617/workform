@@ -9,24 +9,37 @@ def api(request):
     """http://127.0.0.1:8080/api?page=1&limit=50  数据接口
     api?type_data=project_data
     api?type_data=domain_data
+
     """
+    admin_user = ['feixiang', 'dada']   # 管理员
     type_data = request.GET.get('type_data')
     page = int(request.GET.get('page'))
     limit = int(request.GET.get('limit'))
     data_all = []
     username = request.session.get('username')
     if type_data == 'project_data':
-        all_project = models.Domain_info.objects.filter(author=username).values_list('id',
-                                                                                     'domain',
-                                                                                     'online_date',
-                                                                                     'https',
-                                                                                     'state',
-                                                                                     'product__name',
-                                                                                     'project_name',
-                                                                                     'status',
-                                                                                     'apply_date',
-                                                                                     'ops__username')
-
+        if username in admin_user:
+            all_project = models.Domain_info.objects.filter(ops__username=username).values_list('id',
+                                                                                         'domain',
+                                                                                         'online_date',
+                                                                                         'https',
+                                                                                         'state',
+                                                                                         'product__name',
+                                                                                         'project_name',
+                                                                                         'status',
+                                                                                         'apply_date',
+                                                                                         'ops__username')
+        else:
+            all_project = models.Domain_info.objects.filter(author=username).values_list('id',
+                                                                                         'domain',
+                                                                                         'online_date',
+                                                                                         'https',
+                                                                                         'state',
+                                                                                         'product__name',
+                                                                                         'project_name',
+                                                                                         'status',
+                                                                                         'apply_date',
+                                                                                         'ops__username')
         try:
             j = 0
             for i in all_project:
@@ -75,7 +88,6 @@ def api(request):
                 data_all.append(b)
             data = tuple(data_all[i:i + limit] for i in range(0, len(data_all), limit))
             res = {"code": 0, "msg": "", "count": len(data_all), "data": data[page - 1]}
-            # print(res)
             return HttpResponse(json.dumps(res))
         except IndexError as e:
             return e
