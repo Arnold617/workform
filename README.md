@@ -45,7 +45,7 @@
         http://127.0.0.1:8000/article-0-0.html
 
 
-目录结构：
+目录结构:
     static/            存放静态文件 css/js/jpg/....
     form_work          项目主站
     templates          存放 html文件
