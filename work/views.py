@@ -42,7 +42,7 @@ def new_project(request):
         author = request.session.get('username')
         ops = request.POST.get('ops')
         status = 0
-        print(domain, date, https, state, product, ops)
+        # print(domain, date, https, state, product, ops)
         if domain and product and state:
             models.Domain_info.objects.create(project_name=project_name,
                                               domain=domain,
@@ -135,7 +135,7 @@ def backlog_detail(request, nid):
         state = request.POST.get('state')
         ops = request.POST.get('ops')
         status = request.POST.get('status')
-        print(ops, nid, status)
+        # print(ops, nid, status)
         if status:
             status = 1
         else:
@@ -159,7 +159,7 @@ def upload(request):
         fafafa = request.FILES.get('fafafa')
         import os
         img_path = os.path.join('static/images',fafafa.name)
-        print(img_path)
+        # print(img_path)
         with open(img_path,'wb') as f:
             for item in fafafa.chunks():
                 f.write(item)
@@ -181,7 +181,7 @@ def article(request, *args, **kwargs):
     article_type_list = models.ArticleType.objects.all()
     category_list = models.Category.objects.all()
     result = models.Article.objects.filter(**condition)
-    print(kwargs)
+    # print(kwargs)
     return render(request,'article.html',{'article_type_list': article_type_list,
                                           'category_list': category_list,
                                           'result': result,
