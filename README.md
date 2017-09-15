@@ -46,13 +46,13 @@
 
 
 目录结构:
-    结构:
-        static/            存放静态文件 css/js/jpg/....
-        form_work          项目主站
-        templates          存放 html文件
-        utils              存放 插件文件 分布、验证码
-        work               app
-        work/views.py      视图函数，除登陆外的
-        work/view          视图函数，有登陆、验证码、api功能
-        work/models.py     数据库操作功能
-        db.sqlite3         sqlite3 数据库文件
+
+static/            存放静态文件 css/js/jpg/....
+form_work          项目主站
+templates          存放 html文件
+utils              存放 插件文件 分布、验证码
+work               app
+work/views.py      视图函数，除登陆外的
+work/view          视图函数，有登陆、验证码、api功能
+work/models.py     数据库操作功能
+db.sqlite3         sqlite3 数据库文件
