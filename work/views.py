@@ -1,6 +1,7 @@
 # Create your views here.
 from django.views.decorators.csrf import csrf_protect,csrf_exempt
 from django.shortcuts import render,redirect,HttpResponse
+from django.views import View
 from work import models
 import time
 from work.view.account import auth
@@ -21,7 +22,7 @@ def index(request):
 # def base(request):
 #     return render(request, 'base.html')
 
-
+"""
 @auth
 def new_project(request):
     if request.method == 'GET':
@@ -70,6 +71,82 @@ def set_domain(request):
         apply_date = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         internal = request.POST.get('internal')
         if  not internal:
+            internal = 'NO'
+        else:
+            internal = 'YES'
+        state = request.POST.get('state')
+        product = request.POST.get('product')
+        author = request.session.get('username')
+        ops = request.POST.get('ops')
+        status = 0
+        # print(domain, IP, date, internal, state, product)
+        if domain and product and state:
+            models.Op_domain.objects.create(domain=domain,
+                                            IP=IP,
+                                            online_date=online_date,
+                                            apply_date=apply_date,
+                                            internal=internal,
+                                            product_id=product,
+                                            state=state,
+                                            author=author,
+                                            ops_id=ops,
+                                            status=status)
+            return redirect('/index/')
+        else:
+            return render(request, 'set_domain.html')
+"""
+from django.utils.decorators import method_decorator
+
+# CBV
+@method_decorator(auth, name='dispatch')
+class New_project(View):
+    """"项目上线申请"""
+    def get(self, request, *args, **kwargs):
+        return render(request, 'new_project.html')
+
+    def post(self, request, *args, **kwargs):
+        project_name = request.POST.get('project_name')
+        domain = request.POST.get('domain')
+        date = request.POST.get('date')
+        apply_date = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        https = request.POST.get('https')
+        if https:
+            https = "YES"
+        else:
+            https = "NO"
+        state = str(request.POST.get('state'))
+        product = request.POST.get('product')
+        author = request.session.get('username')
+        ops = request.POST.get('ops')
+        status = 0
+        # print(domain, date, https, state, product, ops)
+        if domain and product and state:
+            models.Domain_info.objects.create(project_name=project_name,
+                                              domain=domain,
+                                              online_date=date,
+                                              apply_date=apply_date,
+                                              https=https,
+                                              product_id=product,
+                                              state=state,
+                                              author=author,
+                                              ops_id=ops,
+                                              status=status)
+            return redirect('/index/')
+        else:
+            return render(request, 'new_project.html')
+
+@method_decorator(auth, name='dispatch')
+class Setdomain(View):
+    """域名申请，解析等"""
+    def get(self,request , *args, **kwargs):
+        return render(request, 'set_domain.html')
+    def post(self,  request, *args, **kwargs):
+        domain = request.POST.get('domain')
+        IP = request.POST.get('IP')
+        online_date = str(request.POST.get('date'))
+        apply_date = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        internal = request.POST.get('internal')
+        if not internal:
             internal = 'NO'
         else:
             internal = 'YES'
