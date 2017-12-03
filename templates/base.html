@@ -34,10 +34,6 @@
             <!-- 头部区域（可配合layui已有的水平导航） -->
             <ul class="layui-nav layui-layout-left">
                 <li class="layui-nav-item"><a href="/index/">首页</a></li>
-                <li class="layui-nav-item"><a href="/new_project/">新业务申请</a></li>
-                <li class="layui-nav-item"><a href="/set_domain/">域名解析</a></li>
-                <li class="layui-nav-item"><a href="#">数据库操作</a></li>
-                <li class="layui-nav-item"><a href="#">业务下线</a></li>
             </ul>
             <ul class="layui-nav layui-layout-right">
                 <li class="layui-nav-item">
@@ -54,12 +50,22 @@
         </div>
         <div class="layui-side layui-bg-black">
             <div class="layui-side-scroll">
-                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
                 <ul class="layui-nav layui-nav-tree" >
-                    <li class="layui-nav-item"><a href="#"> 需求 申请</a></li>
-                    <li class="layui-nav-item"><a href="/backlog.html"> 待办 流程</a></li>
-                    <li class="layui-nav-item"><a href="/mine.html"> 我的 流程</a></li>
-              </ul>
+                    <li class="layui-nav-item"><a href="/backlog.html"> 待办流程</a></li>
+                    <li class="layui-nav-item"><a href="/mine.html"> 我的流程</a></li>
+                </ul>
+                <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                    <li class="layui-nav-item layui-nav-itemed">
+                    <a href="javascript:">申请流程</a>
+                    <dl class="layui-nav-child">
+                      <dd><a href="/new_project/">新项目申请</a></dd>
+                      <dd><a href="#">数据库操作</a></dd>
+                      <dd><a href="/set_domain">域名解析</a></dd>
+                      <dd><a href="javascript:">其它需求</a></dd>
+                      <dd><a href="javascript:">业务下线</a></dd>
+                    </dl>
+                  </li>
+                </ul>
             </div>
         </div>
 
