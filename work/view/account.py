@@ -33,9 +33,9 @@ def login(request):
                         request.session['is_login'] = True
                         if request.POST.get('remember', None) == '1':
                             # 超时时间(秒)
-                            request.session.set_expiry(60 * 60)
+                            request.session.set_expiry(60 * 60 *60)
                         else:
-                            request.session.set_expiry(20)
+                            request.session.set_expiry(20 * 60)
                         return redirect('/index/')
                     else:
                         return render(request, 'login.html', {'error_msg': "User or password error"})
